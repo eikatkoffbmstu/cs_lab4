@@ -6,7 +6,6 @@ public class MyMatrix
     private int rows;
     private int cols;
 
-    // Конструктор
     public MyMatrix(int rows, int cols, int minValue, int maxValue)
     {
         this.rows = rows;
@@ -14,7 +13,6 @@ public class MyMatrix
         matrix = new int[rows, cols];
         Random rand = new Random();
 
-        // Заполнение матрицы случайными числами
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
@@ -24,7 +22,6 @@ public class MyMatrix
         }
     }
 
-    // Индексатор для доступа к элементам матрицы
     public int this[int row, int col]
     {
         get { return matrix[row, col]; }
