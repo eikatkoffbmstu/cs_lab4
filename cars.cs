@@ -1,11 +1,28 @@
 using System;
-using System.Collections.Generic;
 
-public class Car
+class Car
 {
-    public string Name { get; set; }
-    public int ProductionYear { get; set; }
-    public int MaxSpeed { get; set; }
+    private string name;
+    private int productionYear;
+    private int maxSpeed;
+
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public int ProductionYear
+    {
+        get { return productionYear; }
+        set { productionYear = value; }
+    }
+
+    public int MaxSpeed
+    {
+        get { return maxSpeed; }
+        set { maxSpeed = value; }
+    }
 
     public Car(string name, int productionYear, int maxSpeed)
     {
@@ -13,76 +30,81 @@ public class Car
         ProductionYear = productionYear;
         MaxSpeed = maxSpeed;
     }
-
-    public override string ToString()
-    {
-        return $"Name: {Name}, Year: {ProductionYear}, Max Speed: {MaxSpeed} km/h";
-    }
 }
 
-public class CarComparer : IComparer<Car>
+class CarComparer : IComparer<Car>
 {
-    public enum SortCriteria
-    {
-        ByName,
-        ByProductionYear,
-        ByMaxSpeed
-    }
+    private string sortBy;
 
-    private SortCriteria criteria;
-
-    public CarComparer(SortCriteria criteria)
+    public CarComparer(string sortBy)
     {
-        this.criteria = criteria;
+        this.sortBy = sortBy;
     }
 
     public int Compare(Car x, Car y)
     {
-        switch (criteria)
+        switch (sortBy)
         {
-            case SortCriteria.ByName:
-                return string.Compare(x.Name, y.Name);
-            case SortCriteria.ByProductionYear:
+            case "Name":
+                return x.Name.CompareTo(y.Name);
+            case "ProductionYear":
                 return x.ProductionYear.CompareTo(y.ProductionYear);
-            case SortCriteria.ByMaxSpeed:
+            case "MaxSpeed":
                 return x.MaxSpeed.CompareTo(y.MaxSpeed);
             default:
-                throw new ArgumentException("Invalid sort criteria");
+                return 0;
         }
     }
 }
 
-class Program
+class lab042
 {
-    static void Main(string[] args)
+    static void Main()
     {
         Car[] cars = new Car[]
         {
-            new Car("Toyota", 2015, 180),
-            new Car("BMW", 2018, 240),
-            new Car("Audi", 2016, 220),
-            new Car("Mercedes", 2020, 250),
-            new Car("Ford", 2012, 160)
+            new Car("Lada Granda", 2015, 150),
+            new Car("Lada Sport", 2023, 2000),
+            new Car("Zaporozhec", 1977, 500),
+            new Car("YAZ", 1980, 8934)
         };
 
-        Console.WriteLine("Original array:");
-        PrintCars(cars);
-        Array.Sort(cars, new CarComparer(CarComparer.SortCriteria.ByName));
-        Console.WriteLine("\nSorted by Name:");
-        PrintCars(cars);
-        Array.Sort(cars, new CarComparer(CarComparer.SortCriteria.ByProductionYear));
-        Console.WriteLine("\nSorted by Production Year:");
-        PrintCars(cars);
-        Array.Sort(cars, new CarComparer(CarComparer.SortCriteria.ByMaxSpeed));
-        Console.WriteLine("\nSorted by Max Speed:");
-        PrintCars(cars);
-    }
-
-    static void PrintCars(Car[] cars)
-    {
+        Console.WriteLine("\nCars:");
         foreach (var car in cars)
         {
-            Console.WriteLine(car);
+            Console.WriteLine($"{car.Name}, {car.ProductionYear}, {car.MaxSpeed}");
+        }
+
+        int i = 0;  while (i != 1)
+        {
+            Console.WriteLine("\nChoose the type of sort (don't take bads):"); string type = Console.ReadLine();
+            switch (type)
+            {
+                case "Name":
+                    Console.WriteLine("Nice!");
+                    Array.Sort(cars, new CarComparer("Name"));
+                    i++;
+                    break;
+                case "Year":
+                    Console.WriteLine("Not bad!");
+                    Array.Sort(cars, new CarComparer("Year"));
+                    i++;
+                    break;
+                case "Speed":
+                    Console.WriteLine("So good!");
+                    Array.Sort(cars, new CarComparer("Speed"));
+                    i++;
+                    break;
+                default:
+                    Console.WriteLine("Ypu can better. Try again");
+                    break;
+            }
+        }
+
+        Console.WriteLine("\nSorted cars:");
+        foreach (var car in cars)
+        {
+            Console.WriteLine($"{car.Name}, {car.ProductionYear}, {car.MaxSpeed}");
         }
     }
 }
