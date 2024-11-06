@@ -63,10 +63,10 @@ class lab042
     {
         Car[] cars = new Car[]
         {
-            new Car("Lada Granda", 2015, 150),
-            new Car("Lada Sport", 2023, 2000),
-            new Car("Zaporozhec", 1977, 500),
-            new Car("YAZ", 1980, 8934)
+            new Car("Lada", 2007, 15),
+            new Car("Honda", 2020, 200),
+            new Car("Bugatti", 2024, 500000),
+            new Car("VAZ", 1007, 10)
         };
 
         Console.WriteLine("\nCars:");
